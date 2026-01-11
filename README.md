@@ -42,7 +42,7 @@ Make sure you have Node.js installed. You will also need a MongoDB connection st
 You need to install dependencies for both the frontend and the backend.
 
 First, clone the repository:
-git clone https://github.com/YOUR_USERNAME/dream-team-platform.git
+git clone https://github.com/GreXinja/TeamUP
 cd dream-team-platform
 
 Then, install the server dependencies:
