@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Home from './pages/Home'; // Add this import
 
 // Helper to protect routes
 const PrivateRoute = ({ children }) => {
@@ -18,7 +19,7 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<div style={{textAlign: 'center', marginTop: '50px'}}><h1>Welcome to the Boilerplate</h1></div>} />
+        <Route path="/" element={<Home />} /> 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
