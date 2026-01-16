@@ -38,6 +38,37 @@
   justify-content: center;
 }
 
+.logout-btn-nav {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.9),   /* purple */
+    rgba(37, 99, 235, 0.9)    /* blue */
+  );
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 24px rgba(124, 58, 237, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.logout-btn-nav:hover {
+  transform: translateY(-1px) scale(1.02);
+
+  box-shadow:
+    0 12px 30px rgba(99, 102, 241, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+
 .logo-text-nav {
   font-size: 30px;
   font-weight: 700;

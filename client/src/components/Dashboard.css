@@ -1,0 +1,95 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 15px;
+}
+
+.welcome-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background: linear-gradient(135deg, #6347de, #93d6f3);
+  color: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.dashboad-avatar-wrapper {
+  flex: 0 0 120px;
+  margin-right: 20px;
+}
+
+.dashboad-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  transition: transform 0.3s ease;
+}
+
+.dashboad-avatar:hover {
+  transform: scale(1.1);
+}
+
+.dashboad-welcome-text {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dashboad-skills-wrapper {
+  margin-top: 10px;
+}
+
+.dashboad-skill-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 12px;
+  margin: 4px;
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+
+.dashboad-skill-tag:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+.dashboad-welcome-actions {
+  margin-top: 15px;
+}
+
+.dashboad-btn-primary {
+  background: #fff;
+  color: #7b5fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-right: 10px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.dashboad-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.dashboad-btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+}
+
+.dashboad-btn-outline:hover {
+  background: rgba(255,255,255,0.2);
+}

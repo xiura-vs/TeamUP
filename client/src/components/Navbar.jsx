@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -7,11 +8,19 @@ export default function Navbar() {
   const menuRef = useRef(null);
   const location = useLocation();
 
+  const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem("token");
+
+  const user = JSON.parse(localStorage.getItem("user")); 
+
   const navItems = [
     { label: "Home", path: "/" },
     { label: "Hackathons", path: "/hackathons" },
     { label: "Find Teammates", path: "/teammates" },
-    { label: "Dashboard", path: "/dashboard" },
+    {
+      label: "Dashboard",
+      path: user ? `/dashboard/${user.id}` : "/login", 
+    },
   ];
 
   useEffect(() => {
@@ -41,6 +50,14 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user"); 
+
+  toast.success("Logged out successfully 👋");
+  navigate("/login");
+};
+
   return (
     <>
       <nav className="navbar" ref={menuRef}>
@@ -69,21 +86,28 @@ export default function Navbar() {
 
           {/* DESKTOP AUTH */}
           <div className="auth-desktop">
-            <Link
-              to="/login"
-              className="login-btn-nav"
-              style={{ textDecoration: "none" }}
-            >
-              Log in
-            </Link>
-
-            <Link
-              to="/signup"
-              className="signup-btn-nav"
-              style={{ textDecoration: "none" }}
-            >
-              Sign up
-            </Link>
+            {isLoggedIn ? (
+              <button onClick={handleLogout} className="logout-btn-nav">
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="login-btn-nav"
+                  style={{ textDecoration: "none" }}
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="signup-btn-nav"
+                  style={{ textDecoration: "none" }}
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* HAMBURGER */}
@@ -119,23 +143,36 @@ export default function Navbar() {
           ))}
 
           <div className="auth-mobile">
-            <Link
-              to="/login"
-              className="login-btn-nav"
-              onClick={() => setMenuOpen(false)}
-              style={{ textDecoration: "none" }}
-            >
-              Log in
-            </Link>
-
-            <Link
-              to="/signup"
-              className="signup-btn-nav"
-              onClick={() => setMenuOpen(false)}
-              style={{ textDecoration: "none" }}
-            >
-              Sign up
-            </Link>
+            {isLoggedIn ? (
+              <button
+                className="logout-btn-nav"
+                onClick={() => {
+                  handleLogout();
+                  setMenuOpen(false);
+                }}
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="login-btn-nav"
+                  onClick={() => setMenuOpen(false)}
+                  style={{ textDecoration: "none" }}
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="signup-btn-nav"
+                  onClick={() => setMenuOpen(false)}
+                  style={{ textDecoration: "none" }}
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>

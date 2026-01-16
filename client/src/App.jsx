@@ -10,14 +10,14 @@ import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Home from "./pages/Home";
+import Dashboard from "./components/Dashboard";
 
-const PrivateRoute = ({ children }) => {
+const PublicRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" />;
+  return token ? <Navigate to="/" /> : children;
 };
 
 function AppWrapper() {
@@ -37,19 +37,26 @@ function AppWrapper() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-
         <Route
-          path="/dashboard"
+          path="/login"
           element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
           }
         />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
+
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/dashboard/:userId" element={<Dashboard />} />
       </Routes>
     </>
   );
