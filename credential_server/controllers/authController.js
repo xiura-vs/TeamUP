@@ -4,24 +4,28 @@ const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res) => {
   try {
-    const { fullName, email, college, gender, password, skills } = req.body;
+    const { fullName, email, college, gender, password, skills, bio } =
+      req.body;
 
     if (!fullName || !email || !college || !password) {
-      return res.status(400).json({ message: "Please provide the required details." });
+      return res
+        .status(400)
+        .json({ message: "Please provide the required details." });
     }
 
-    // check if user exists
     const existing = await User.findOne({ email });
     if (existing) {
-      return res.status(400).json({ message: "User with this email already exists." });
+      return res
+        .status(400)
+        .json({ message: "User with this email already exists." });
     }
 
-    // hash password
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
 
-    // normalize skills (ensure array)
-    const normalizedSkills = Array.isArray(skills) ? skills.map(s => s.trim()).filter(Boolean) : [];
+    const normalizedSkills = Array.isArray(skills)
+      ? skills.map((s) => s.trim()).filter(Boolean)
+      : [];
 
     const user = await User.create({
       fullName,
@@ -29,11 +33,13 @@ exports.signup = async (req, res) => {
       college,
       gender,
       password: hashed,
+      bio,
       skills: normalizedSkills,
     });
 
-    // create JWT
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
     res.status(201).json({
       message: "User registered successfully",
@@ -57,31 +63,24 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1. Validate
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // 2. Check user
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // 3. Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // 4. Generate token
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
-    // 5. Send response
     res.status(200).json({
       message: "Login successful",
       token,
@@ -96,6 +95,60 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch {
+    res.status(500).json({ message: "Failed to fetch profile" });
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    console.log("LOGGED IN USER ID:", req.user.id);
+
+    const users = await User.find({
+      _id: { $ne: req.user.id },
+    }).select("fullName email college bio");
+
+    console.log(
+      "USERS RETURNED:",
+      users.map((u) => u.fullName),
+    );
+
+    res.json({ users });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch users" });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const { fullName, college, gender, bio, skills } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        fullName,
+        college,
+        gender,
+        bio,
+        skills,
+      },
+      { new: true, runValidators: true },
+    ).select("-password");
+
+    res.json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update profile" });
+  }
+};
 
 exports.authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
