@@ -8,7 +8,7 @@ const {
   markAsRead,
   authMiddleware,
   getConversations,
-  getOrCreateConversation,
+  getOrCreateConversation
 } = require("../controllers/chatController");
 
 router.post("/send", authMiddleware, sendMessage);

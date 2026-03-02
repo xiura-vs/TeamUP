@@ -2,6 +2,8 @@ const Connection = require("../models/Connections");
 
 exports.sendRequest = async (req, res) => {
   try {
+    console.log("REQ.USER:", req.user);
+  console.log("BODY:", req.body);
     const senderId = req.user.id;
     const { receiverId } = req.body;
 

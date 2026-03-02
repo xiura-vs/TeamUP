@@ -167,12 +167,42 @@ exports.getConversations = async (req, res) => {
 
 /**
  * AUTH MIDDLEWARE
- */
+//  */
+// module.exports.authMiddleware = (req, res, next) => {
+//   const authHeader = req.headers.authorization;
+
+//   if (!authHeader || !authHeader.startsWith("Bearer ")) {
+//     return res.status(401).json({ message: "No token provided" });
+//   }
+
+//   try {
+//     const token = authHeader.split(" ")[1];
+
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//     console.log("DECODED:", decoded);
+
+//     // ✅ FIXED
+//     req.user = { id: decoded.id };
+//     // OR: req.user = decoded;
+
+//     console.log("req.user set to:", req.user);
+
+//     next();
+
+//   } catch (err) {
+//     console.error("JWT ERROR:", err.message);
+//     return res.status(401).json({ message: "Token invalid" });
+//   }
+// };
+
 module.exports.authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "No token provided" });
+    return res.status(401).json({
+      message: "No token provided",
+    });
   }
 
   try {
@@ -182,16 +212,24 @@ module.exports.authMiddleware = (req, res, next) => {
 
     console.log("DECODED:", decoded);
 
-    // ✅ THIS IS THE FIX
-    req.user = { id: decoded.userId };
+    // ✅ Handle both old and new token formats
+    const userId = decoded.id || decoded.userId;
 
-    console.log("req.user set to:", req.user);
+    if (!userId) {
+      return res.status(401).json({
+        message: "Invalid token payload",
+      });
+    }
+
+    req.user = { id: userId };
 
     next();
 
   } catch (err) {
     console.error("JWT ERROR:", err.message);
-    return res.status(401).json({ message: "Token invalid" });
+    return res.status(401).json({
+      message: "Token invalid or expired",
+    });
   }
 };
 
