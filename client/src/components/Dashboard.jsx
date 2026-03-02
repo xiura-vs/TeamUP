@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 import DashboardChat from "./DashboardChat";
 
 const avatarMap = {
-  male: ["/avatars/male1.jpg", "/avatars/male2.jpg"],
-  female: ["/avatars/female1.png", "/avatars/female2.webp"],
-  others: ["/avatars/others.jpg"],
+  male: "/avatars/male1.jpg",
+  female: "/avatars/female1.png",
+  others: "/avatars/others.jpg",
 };
 
 function getRandomAvatar(gender) {
@@ -64,6 +64,13 @@ export default function Dashboard() {
   useEffect(() => {
     fetchConnectionsCount();
     fetchRequests();
+
+    const interval = setInterval(() => {
+      fetchRequests();
+      fetchConnectionsCount();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -74,6 +81,9 @@ export default function Dashboard() {
           { headers: { Authorization: `Bearer ${token}` } },
         );
         setUser(res.data);
+
+        // ✅ generate avatar once
+        setAvatar(getRandomAvatar(res.data.gender));
       } catch (err) {
         console.error(err);
       }
@@ -82,18 +92,31 @@ export default function Dashboard() {
   }, [userId, token]);
 
   useEffect(() => {
-    const fetchInbox = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/chat/inbox", {
+  if (!token) return;
+
+  const fetchInbox = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/api/chat/inbox",
+        {
           headers: { Authorization: `Bearer ${token}` },
-        });
-        setInbox(res.data.inbox || []);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchInbox();
-  }, [token]);
+        }
+      );
+      setInbox(res.data.inbox || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Initial load
+  fetchInbox();
+
+  // Poll every 4 seconds
+  const interval = setInterval(fetchInbox, 4000);
+
+  return () => clearInterval(interval);
+
+}, [token]);
 
   if (!user) return <div className="loading">Loading...</div>;
 
@@ -102,7 +125,7 @@ export default function Dashboard() {
       <div className="welcome-card">
         <div className="dashboad-avatar-wrapper">
           <img
-            src={getRandomAvatar(user.gender)}
+            src={avatarMap[user.gender] || avatarMap.others}
             alt="avatar"
             className="dashboad-avatar"
           />

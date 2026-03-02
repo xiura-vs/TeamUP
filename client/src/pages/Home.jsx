@@ -4,6 +4,7 @@ import HowItWorks from "../components/HowItWorks";
 import Features from "../components/Features";
 import Hero from "../components/Hero";
 import StatsCards from "../components/StatsCards";
+import FAQ from "../components/FAQ";
 
 const Home = () => {
   return (
@@ -101,7 +102,10 @@ const Home = () => {
           </div>
         </section>
 
-        {/* 6. CTA SECTION */}
+        {/* 6. FAQ SECTION */}
+        <FAQ />
+
+        {/* 7. CTA SECTION */}
         <section className="cta-wrapper">
           <div className="cta-card">
             <div className="cta-content">
@@ -127,7 +131,7 @@ const Home = () => {
         </section>
       </div>{" "}
       {/* End main-container */}
-      {/* 7. FOOTER */}
+      {/* 8. FOOTER */}
       <footer className="footer">
         <div className="footer-content main-container">
           <div className="footer-brand">
@@ -142,13 +146,13 @@ const Home = () => {
             </div>
             <div>
               <h4>Company</h4>
-              <a href="#">About</a>
+              <Link to="/about">About</Link>
               <a href="#">Blog</a>
             </div>
             <div>
               <h4>Legal</h4>
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
+              <Link to="/privacy">Privacy</Link>
+              <Link to="/terms">Terms</Link>
             </div>
           </div>
         </div>
