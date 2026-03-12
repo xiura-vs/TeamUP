@@ -13,4 +13,5 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+export const getHackathons = () => api.get('/hackathons');
 export default api;

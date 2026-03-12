@@ -1,0 +1,228 @@
+.hackathons-page {
+  min-height: 100vh;
+  background: #faf9ff;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Hero */
+.hack-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  padding: 72px 40px 60px;
+  text-align: center;
+}
+
+.hack-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hack-hero-badge {
+  display: inline-block;
+  background: rgba(108, 71, 255, 0.3);
+  border: 1px solid rgba(108, 71, 255, 0.5);
+  color: #c4b5ff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hack-hero-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.hack-hero-accent {
+  background: linear-gradient(90deg, #a78bfa, #6C47FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hack-hero-sub {
+  color: #a0aec0;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hack-hero-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hack-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.25;
+}
+
+.hack-orb--1 {
+  width: 350px;
+  height: 350px;
+  background: #6C47FF;
+  top: -100px;
+  right: -80px;
+}
+
+.hack-orb--2 {
+  width: 250px;
+  height: 250px;
+  background: #a78bfa;
+  bottom: -80px;
+  left: -60px;
+}
+
+/* Controls */
+.hack-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 24px 40px;
+  background: #fff;
+  border-bottom: 1px solid #ede9ff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.hack-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 220px;
+}
+
+.hack-search-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 1rem;
+}
+
+.hack-search {
+  width: 100%;
+  padding: 10px 38px 10px 38px;
+  border: 1.5px solid #e0d8ff;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: #faf9ff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.hack-search:focus {
+  border-color: #6C47FF;
+}
+
+.hack-search-clear {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  font-size: 0.85rem;
+  padding: 2px 4px;
+}
+
+.hack-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hack-select {
+  padding: 9px 14px;
+  border: 1.5px solid #e0d8ff;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  background: #faf9ff;
+  cursor: pointer;
+  outline: none;
+  color: #333;
+  transition: border-color 0.2s;
+}
+
+.hack-select:focus {
+  border-color: #6C47FF;
+}
+
+/* Content */
+.hack-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 40px 40px 80px;
+}
+
+/* States */
+.hack-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 20px;
+  text-align: center;
+  color: #777;
+}
+
+.hack-state--error {
+  color: #c62828;
+}
+
+.hack-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #e0d8ff;
+  border-top-color: #6C47FF;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hack-retry {
+  padding: 10px 24px;
+  background: #6C47FF;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .hack-hero {
+    padding: 52px 20px 44px;
+  }
+  .hack-controls {
+    padding: 16px 20px;
+  }
+  .hack-content {
+    padding: 24px 20px 60px;
+  }
+  .hack-filters {
+    width: 100%;
+  }
+  .hack-select {
+    flex: 1;
+  }
+}

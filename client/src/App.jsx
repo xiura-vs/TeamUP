@@ -20,6 +20,7 @@ import Dashboard from "./components/Dashboard";
 import FindTeammates from "./components/FindTeammates";
 import EditProfile from "./components/EditProfile";
 import AllProfiles from "./components/AllProfiles";
+import Hackathons from "./pages/Hackathons";
 
 const PublicRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -69,6 +70,7 @@ function AppWrapper() {
         <Route path="/find-teammates/:userId" element={<FindTeammates />} />
         <Route path="/edit-profile/:userId" element={<EditProfile />} />
         <Route path="/browse-profiles" element={<AllProfiles />} />
+        <Route path="/hackathons" element={<Hackathons />} />
       </Routes>
     </>
   );

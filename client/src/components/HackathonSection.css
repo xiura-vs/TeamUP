@@ -1,0 +1,50 @@
+.hack-section {
+  margin-bottom: 52px;
+}
+
+.hack-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.hack-section-emoji {
+  font-size: 1.5rem;
+}
+
+.hack-section-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.hack-section-count {
+  background: #6C47FF;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 20px;
+  margin-left: 2px;
+}
+
+.hack-section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.hack-section-empty {
+  color: #aaa;
+  font-size: 0.9rem;
+  padding: 24px 0;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .hack-section-grid {
+    grid-template-columns: 1fr;
+  }
+}
