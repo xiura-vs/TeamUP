@@ -23,6 +23,16 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     skills: { type: [String], default: [] },
+    linkedin: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    github: {
+      type: String,
+      trim: true,
+      default: "",
+    },
   },
   { timestamps: true },
 );

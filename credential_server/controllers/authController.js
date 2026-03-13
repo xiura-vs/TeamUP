@@ -4,8 +4,17 @@ const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res) => {
   try {
-    const { fullName, email, college, gender, password, skills, bio } =
-      req.body;
+    const {
+      fullName,
+      email,
+      college,
+      gender,
+      password,
+      skills,
+      bio,
+      linkedin,
+      github,
+    } = req.body;
 
     if (!fullName || !email || !college || !password) {
       return res
@@ -26,6 +35,16 @@ exports.signup = async (req, res) => {
     const normalizedSkills = Array.isArray(skills)
       ? skills.map((s) => s.trim()).filter(Boolean)
       : [];
+    let normalizedLinkedin = (linkedin || "").trim();
+    let normalizedGithub = (github || "").trim();
+
+    if (normalizedGithub && !normalizedGithub.startsWith("http")) {
+      normalizedGithub = `https://github.com/${normalizedGithub.replace("github.com/", "")}`;
+    }
+
+    if (normalizedLinkedin && !normalizedLinkedin.startsWith("http")) {
+      normalizedLinkedin = `https://linkedin.com/in/${normalizedLinkedin.replace("linkedin.com/in/", "")}`;
+    }
 
     const user = await User.create({
       fullName,
@@ -35,11 +54,13 @@ exports.signup = async (req, res) => {
       password: hashed,
       bio,
       skills: normalizedSkills,
+      linkedin: normalizedLinkedin,
+      github: normalizedGithub,
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+  expiresIn: "7d",
+});
 
     res.status(201).json({
       message: "User registered successfully",
@@ -49,7 +70,10 @@ exports.signup = async (req, res) => {
         email: user.email,
         college: user.college,
         gender: user.gender,
+        bio: user.bio,
         skills: user.skills,
+        linkedin: user.linkedin,
+        github: user.github,
       },
       token,
     });
@@ -106,16 +130,14 @@ exports.getProfile = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    console.log("LOGGED IN USER ID:", req.user.id);
+    const allUsers = await User.find();
+    console.log("ALL USERS IN DB:", allUsers.map(u => u.fullName));
 
     const users = await User.find({
-      _id: { $ne: req.user.id },
-    }).select("fullName email college bio");
+      _id: { $ne: req.user.id }
+    });
 
-    console.log(
-      "USERS RETURNED:",
-      users.map((u) => u.fullName),
-    );
+    console.log("USERS AFTER FILTER:", users.map(u => u.fullName));
 
     res.json({ users });
   } catch (err) {
@@ -127,7 +149,8 @@ exports.updateProfile = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const { fullName, college, gender, bio, skills } = req.body;
+    const { fullName, college, gender, bio, skills, linkedin, github } =
+      req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -137,6 +160,8 @@ exports.updateProfile = async (req, res) => {
         gender,
         bio,
         skills,
+        linkedin: (linkedin || "").trim(),
+        github: (github || "").trim(),
       },
       { new: true, runValidators: true },
     ).select("-password");

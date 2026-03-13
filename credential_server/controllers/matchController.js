@@ -54,7 +54,9 @@ exports.matchTeammates = async (req, res) => {
       ),
     ];
 
-    const users = await User.find({});
+    const users = await User.find({
+  _id: { $ne: req.user.id }
+});
 
     const matches = users
       .map((user) => {
