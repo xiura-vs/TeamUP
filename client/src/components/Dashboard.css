@@ -22,6 +22,43 @@
   margin-right: 20px;
 }
 
+.dashboard-social-links {
+  margin: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.social-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+/* GitHub */
+.social-chip.github {
+  background: rgba(255,255,255,0.25);
+  color: white;
+  text-decoration: none;
+}
+
+/* LinkedIn */
+.social-chip.linkedin {
+  background: rgba(255,255,255,0.25);
+  color: white;
+  text-decoration: none;
+}
+
+.social-chip:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
 .dashboad-avatar {
   width: 120px;
   height: 120px;
@@ -59,8 +96,27 @@
   background: rgba(255, 255, 255, 0.4);
 }
 
+.dashboard-social-links {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+}
+
+.dashboard-social-links a {
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.dashboard-social-links a:hover {
+  opacity: 0.85;
+}
+
 .dashboad-welcome-actions {
   margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .dashboad-btn-primary {
@@ -69,7 +125,6 @@
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
-  margin-right: 10px;
   font-size: 17px;
   cursor: pointer;
   transition: transform 0.2s ease;

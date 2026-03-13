@@ -161,6 +161,33 @@ export default function Dashboard() {
             <p className="no-skills">No skills added yet</p>
           )}
         </div>
+      
+
+        <div className="dashboard-social-links">
+
+  {user.github && (
+    <a
+      href={user.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="social-chip github"
+    >
+      <span></span> GitHub
+    </a>
+  )}
+
+  {user.linkedin && (
+    <a
+      href={user.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="social-chip linkedin"
+    >
+      <span></span> LinkedIn
+    </a>
+  )}
+
+</div>
 
         <div className="dashboad-welcome-actions">
           <button

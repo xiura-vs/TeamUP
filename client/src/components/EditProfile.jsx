@@ -15,6 +15,8 @@ export default function EditProfile() {
     gender: "prefer-not-to-say",
     bio: "",
     skills: "",
+    linkedin: "",
+    github: "",
   });
 
   useEffect(() => {
@@ -30,6 +32,8 @@ export default function EditProfile() {
           gender: res.data.gender || "prefer-not-to-say",
           bio: res.data.bio || "",
           skills: res.data.skills?.join(", ") || "",
+          linkedin: res.data.linkedin || "",
+          github: res.data.github || "",
         });
       } catch (err) {
         toast.error("Failed to load profile ❌");
@@ -116,6 +120,28 @@ export default function EditProfile() {
             value={form.skills}
             onChange={handleChange}
             placeholder="React, Node, MongoDB"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>LinkedIn Profile</label>
+          <input
+            name="linkedin"
+            type="url"
+            value={form.linkedin}
+            onChange={handleChange}
+            placeholder="https://www.linkedin.com/in/your-profile"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>GitHub Profile</label>
+          <input
+            name="github"
+            type="url"
+            value={form.github}
+            onChange={handleChange}
+            placeholder="https://github.com/your-username"
           />
         </div>
 

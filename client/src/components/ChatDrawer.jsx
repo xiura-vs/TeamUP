@@ -17,6 +17,15 @@ export default function ChatDrawer({ user, conversationId, onClose }) {
   const otherUserId = user?._id || user?.id;
 
   useEffect(() => {
+  if (!currentUser) return;
+
+  const userId = currentUser._id || currentUser.id;
+
+  socket.emit("join", userId);
+
+}, [currentUser]);
+
+  useEffect(() => {
     if (!user) return;
 
     if (!conversationId && !otherUserId) {
@@ -73,7 +82,7 @@ export default function ChatDrawer({ user, conversationId, onClose }) {
     if (!resolvedConversationId) return;
 
     const handleReceive = (msg) => {
-      if (msg.sender === currentUser.id) return;
+      if (msg.sender === currentUser._id || currentUser.id) return;
       if (msg.conversation !== resolvedConversationId) return;
 
       setMessages((prev) => {
@@ -162,25 +171,27 @@ export default function ChatDrawer({ user, conversationId, onClose }) {
         </div>
 
         {/* MESSAGES */}
-        <div className="chat-body">
-          {messages.map((msg) => (
-            <div
-              key={msg._id}
-              className={`msg ${
-                msg.sender === currentUser.id ? "outgoing" : "incoming"
-              }`}
-            >
-              {msg.text}
-              <span className="time">
-                {new Date(msg.createdAt).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
-            </div>
-          ))}
-          <div ref={bottomRef} />
-        </div>
+       <div className="chat-body">
+  {messages.map((msg) => (
+    <div
+      key={msg._id}
+      className={`msg ${
+        String(msg.sender) === String(currentUser._id || currentUser.id)
+          ? "outgoing"
+          : "incoming"
+      }`}
+    >
+      {msg.text}
+      <span className="time">
+        {new Date(msg.createdAt).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </span>
+    </div>
+  ))}
+  <div ref={bottomRef} />
+</div>
 
         {/* INPUT */}
         <div className="chat-input">

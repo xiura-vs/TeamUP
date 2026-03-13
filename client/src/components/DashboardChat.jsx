@@ -85,7 +85,7 @@ export default function DashboardChat({ user, conversationId }) {
           <div
             key={msg._id}
             className={`msg ${
-              String(msg.sender) === String(currentUser.id)
+              String(msg.sender) === String(currentUser._id || currentUser.id)
                 ? "outgoing"
                 : "incoming"
             }`}

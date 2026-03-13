@@ -11,22 +11,23 @@ export default function Navbar() {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("token");
 
-  const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("user"));
+const userId = user?.id || user?._id;
 
   const navItems = [
-    { key: "home", label: "Home", path: "/" },
-    { key: "hackathons", label: "Hackathons", path: "/hackathons" },
-    {
-      key: "find-teammates",
-      label: "Find Teammates",
-      path: user ? `/find-teammates/${user.id}` : "/login",
-    },
-    {
-      key: "dashboard",
-      label: "Dashboard",
-      path: user ? `/dashboard/${user.id}` : "/login",
-    },
-  ];
+  { key: "home", label: "Home", path: "/" },
+  { key: "hackathons", label: "Hackathons", path: "/hackathons" },
+  {
+    key: "find-teammates",
+    label: "Find Teammates",
+    path: userId ? `/find-teammates/${userId}` : "/login",
+  },
+  {
+    key: "dashboard",
+    label: "Dashboard",
+    path: userId ? `/dashboard/${userId}` : "/login",
+  },
+];
 
   useEffect(() => {
     const handleClickOutside = (e) => {
