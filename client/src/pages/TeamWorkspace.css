@@ -1,0 +1,195 @@
+/* ── TeamWorkspace.css ── */
+
+.tw-loading,
+.tw-error-page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #6b7280;
+}
+
+.tw-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #e9d5ff;
+  border-top-color: #7c3aed;
+  border-radius: 50%;
+  animation: tw-spin 0.8s linear infinite;
+}
+
+@keyframes tw-spin { to { transform: rotate(360deg); } }
+
+.tw-error-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  max-width: 380px;
+}
+
+.tw-error-icon { font-size: 48px; margin-bottom: 12px; }
+.tw-error-card h2 { font-size: 22px; font-weight: 800; color: #1f2937; margin: 0 0 8px; }
+.tw-error-card p { color: #6b7280; font-size: 15px; margin: 0 0 20px; }
+
+.tw-back-btn {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── Hero ── */
+.tw-page {
+  min-height: 100vh;
+  background: #f8f7ff;
+}
+
+.tw-hero {
+  background: linear-gradient(135deg, #6c3de0 0%, #a855f7 60%, #ec4899 100%);
+  padding: 40px 24px 36px;
+  color: #fff;
+}
+
+.tw-hero--done {
+  background: linear-gradient(135deg, #374151, #4b5563);
+}
+
+.tw-hero-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.tw-status-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 100px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.tw-team-name {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 0 0 6px;
+  line-height: 1.15;
+}
+
+.tw-project-idea {
+  font-size: 16px;
+  margin: 0 0 8px;
+  opacity: 0.9;
+}
+
+.tw-description {
+  font-size: 14px;
+  margin: 0 0 14px;
+  opacity: 0.8;
+  max-width: 540px;
+  line-height: 1.6;
+}
+
+.tw-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tw-skill-tag {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 100px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tw-complete-btn {
+  padding: 12px 22px;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.5);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.tw-complete-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.25);
+}
+
+.tw-complete-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Layout ── */
+.tw-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .tw-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Tabs ── */
+.tw-tabs {
+  display: flex;
+  gap: 4px;
+  background: #fff;
+  padding: 5px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(108, 61, 224, 0.07);
+  margin-bottom: 16px;
+}
+
+.tw-tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tw-tab--active {
+  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  color: #fff;
+}
+
+.tw-tab:hover:not(.tw-tab--active) {
+  background: #f3e8ff;
+  color: #7c3aed;
+}
+
+.tw-tab-content {
+  /* children manage their own height */
+}

@@ -30,6 +30,7 @@ const { Server } = require("socket.io");
 const connectDB = require("./config/db");
 const hackathonRoutes = require('./routes/hackathonRoutes');
 const { startHackathonCron } = require('./utils/hackathonCron');
+const teamRoutes = require('./routes/teamRoutes');
 
 dotenv.config();
 connectDB();
@@ -47,6 +48,7 @@ app.use("/api/match", require("./routes/matchRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
 app.use("/api/connections", require("./routes/connectionRoutes"));
 app.use('/api/hackathons', hackathonRoutes);
+app.use('/api/teams', teamRoutes);
 
 app.get("/", (req, res) => res.send("TeamUP credentials server"));
 

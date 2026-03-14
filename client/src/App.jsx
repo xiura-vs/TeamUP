@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -21,10 +21,18 @@ import FindTeammates from "./components/FindTeammates";
 import EditProfile from "./components/EditProfile";
 import AllProfiles from "./components/AllProfiles";
 import Hackathons from "./pages/Hackathons";
+import CreateTeam from "./pages/CreateTeam";
+import TeamWorkspace from "./pages/TeamWorkspace";
+import InviteAccept from "./pages/InviteAccept";
 
 const PublicRoute = ({ children }) => {
   const token = localStorage.getItem("token");
   return token ? <Navigate to="/" /> : children;
+};
+
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" />;
 };
 
 function AppWrapper() {
@@ -63,7 +71,6 @@ function AppWrapper() {
             </PublicRoute>
           }
         />
-
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
@@ -71,6 +78,26 @@ function AppWrapper() {
         <Route path="/edit-profile/:userId" element={<EditProfile />} />
         <Route path="/browse-profiles" element={<AllProfiles />} />
         <Route path="/hackathons" element={<Hackathons />} />
+
+        {/* ── Team Routes ── */}
+        <Route
+          path="/create-team"
+          element={
+            <PrivateRoute>
+              <CreateTeam />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/team/:teamId"
+          element={
+            <PrivateRoute>
+              <TeamWorkspace />
+            </PrivateRoute>
+          }
+        />
+        {/* Invite accept – publicly routable but auth-gated inside the component */}
+        <Route path="/invite/:token" element={<InviteAccept />} />
       </Routes>
     </>
   );

@@ -1,0 +1,131 @@
+.tb-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tb-toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tb-add-btn {
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.tb-add-btn:hover { opacity: 0.88; }
+
+.tb-form {
+  display: flex;
+  gap: 10px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(108, 61, 224, 0.08);
+  flex-wrap: wrap;
+}
+
+.tb-input {
+  flex: 2;
+  min-width: 160px;
+  padding: 10px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.tb-input:focus { border-color: #a855f7; }
+
+.tb-select {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fafafa;
+  outline: none;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.tb-select:focus { border-color: #a855f7; }
+
+.tb-submit-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.tb-submit-btn:hover:not(:disabled) { opacity: 0.88; }
+.tb-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.tb-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .tb-board { grid-template-columns: 1fr; }
+}
+
+.tb-col {
+  background: #f8f7ff;
+  border-radius: 16px;
+  padding: 16px;
+  min-height: 200px;
+}
+
+.tb-col--todo { background: #f8fafc; }
+.tb-col--inprogress { background: #fffbeb; }
+.tb-col--completed { background: #f0fdf4; }
+
+.tb-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.tb-col-count {
+  background: #fff;
+  border-radius: 100px;
+  padding: 2px 9px;
+  font-size: 12px;
+  color: #6b7280;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.tb-col-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tb-empty {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 13px;
+  color: #c4c9d4;
+}

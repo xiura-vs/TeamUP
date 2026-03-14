@@ -1,0 +1,79 @@
+.tcard {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border-left: 4px solid #e5e7eb;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.tcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 61, 224, 0.1);
+}
+
+.tcard--todo { border-left-color: #94a3b8; }
+.tcard--inprogress { border-left-color: #f59e0b; }
+.tcard--completed { border-left-color: #22c55e; }
+
+.tcard-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.tcard-assigned {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.tcard-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tcard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tcard-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.tcard-badge--todo { background: #f1f5f9; color: #64748b; }
+.tcard-badge--inprogress { background: #fef3c7; color: #b45309; }
+.tcard-badge--completed { background: #dcfce7; color: #16a34a; }
+
+.tcard-select {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.tcard-select:focus { border-color: #a855f7; }
