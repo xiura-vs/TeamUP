@@ -1,7 +1,7 @@
 /* ── CreateTeam.css ── */
 .ct-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #f0fdf4 100%);
+  background: linear-gradient(135deg, #f5f3ff 0%, #f7f5f5 50%, #f0fdf4 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,7 +30,7 @@
 .ct-header h1 {
   font-size: 28px;
   font-weight: 800;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  background: linear-gradient(135deg, #6347de, #93d6f3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -99,15 +99,16 @@
 
 .ct-btn {
   padding: 14px;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
-  color: #fff;
+background: linear-gradient(135deg, #6347de, #93d6f3);  color: #fff;
   border: none;
   border-radius: 12px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   margin-top: 8px;
-  transition: opacity 0.2s, transform 0.15s;
+  transition:
+    opacity 0.2s,
+    transform 0.15s;
 }
 
 .ct-btn:hover:not(:disabled) {

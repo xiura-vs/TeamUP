@@ -1,110 +1,101 @@
+/* Page Background */
+
 .ia-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f3ff, #ede9fe 60%, #fdf4ff);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 16px;
+  background: linear-gradient(135deg, #6347de, #93d6f3);
+  padding: 20px;
+  font-family: "Inter", sans-serif;
 }
+
+/* Card */
 
 .ia-card {
-  background: #fff;
-  border-radius: 24px;
-  box-shadow: 0 8px 48px rgba(108, 61, 224, 0.13);
-  padding: 48px 40px;
+  background: white;
   width: 100%;
   max-width: 460px;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.15);
   text-align: center;
+  animation: fadeIn 0.4s ease;
 }
 
-.ia-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  color: #888;
-}
-
-.ia-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid #e9d5ff;
-  border-top-color: #7c3aed;
-  border-radius: 50%;
-  animation: ia-spin 0.8s linear infinite;
-}
-
-@keyframes ia-spin {
-  to { transform: rotate(360deg); }
-}
+/* Badge */
 
 .ia-badge {
   display: inline-block;
-  background: #f3e8ff;
-  color: #7c3aed;
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 4px 14px;
-  border-radius: 100px;
+  font-weight: 600;
+  background: rgba(99,71,222,0.1);
+  color: #6347de;
+  padding: 6px 12px;
+  border-radius: 999px;
   margin-bottom: 16px;
 }
 
+/* Icon */
+
 .ia-icon {
-  font-size: 52px;
+  font-size: 48px;
   margin-bottom: 12px;
 }
 
+/* Heading */
+
 .ia-content h1 {
-  font-size: 28px;
-  font-weight: 800;
-  color: #1f2937;
-  margin: 0 0 6px;
+  margin: 10px 0;
+  font-size: 26px;
+  font-weight: 700;
 }
 
 .ia-sub {
-  color: #6b7280;
-  font-size: 15px;
-  margin: 0 0 28px;
+  color: #666;
+  margin-bottom: 24px;
 }
 
+/* Team Card */
+
 .ia-team-card {
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
-  border-radius: 16px;
-  padding: 20px 24px;
-  margin-bottom: 28px;
-  text-align: left;
+  background: #f8f9ff;
+  border: 1px solid #e8e9ff;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 26px;
 }
 
 .ia-team-name {
-  font-size: 20px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
 }
 
 .ia-team-idea {
+  margin-top: 6px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
+  color: #666;
 }
+
+/* Button */
 
 .ia-btn {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
-  color: #fff;
+  padding: 12px;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s;
+  background: linear-gradient(135deg, #6347de, #93d6f3);
+  color: white;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.ia-btn:hover:not(:disabled) {
-  opacity: 0.92;
-  transform: translateY(-1px);
+.ia-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
 .ia-btn:disabled {
@@ -112,47 +103,90 @@
   cursor: not-allowed;
 }
 
+/* Signup hint */
+
 .ia-signup-hint {
   margin-top: 16px;
   font-size: 14px;
-  color: #6b7280;
+  color: #666;
 }
 
 .ia-signup-hint a {
-  color: #7c3aed;
+  color: #6347de;
   font-weight: 600;
   text-decoration: none;
 }
 
-.ia-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+.ia-signup-hint a:hover {
+  text-decoration: underline;
 }
 
+/* Loading */
+
+.ia-loading {
+  text-align: center;
+}
+
+.ia-spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid #eee;
+  border-top: 4px solid #6347de;
+  border-radius: 50%;
+  margin: auto;
+  margin-bottom: 12px;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Success & Error */
+
 .ia-state h2 {
-  font-size: 22px;
-  font-weight: 800;
-  margin: 0;
+  margin-top: 10px;
 }
 
 .ia-state p {
-  color: #6b7280;
-  font-size: 15px;
-  margin: 0;
+  color: #666;
+  margin-top: 8px;
 }
-
-.ia-state--error h2 { color: #dc2626; }
-.ia-state--success h2 { color: #16a34a; }
 
 .ia-link-btn {
   display: inline-block;
-  margin-top: 8px;
-  padding: 10px 24px;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
-  color: #fff;
-  border-radius: 10px;
+  margin-top: 16px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #6347de, #93d6f3);
+  color: white;
+  border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+/* Animations */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 480px) {
+  .ia-card {
+    padding: 28px;
+  }
+
+  .ia-content h1 {
+    font-size: 22px;
+  }
 }

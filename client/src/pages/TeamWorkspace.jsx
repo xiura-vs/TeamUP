@@ -1,29 +1,40 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getTeamWorkspace, completeProject } from '../api';
-import TeamMembers from '../components/TeamMembers';
-import TeamChat from '../components/TeamChat';
-import TaskBoard from '../components/TaskBoard';
-import ResourceList from '../components/ResourceList';
-import './TeamWorkspace.css';
+import React, { useState, useEffect, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getTeamWorkspace, completeProject } from "../api";
+import TeamMembers from "../components/TeamMembers";
+import TeamChat from "../components/TeamChat";
+import TaskBoard from "../components/TaskBoard";
+import ResourceList from "../components/ResourceList";
+import { toast } from "react-toastify";
+import "./TeamWorkspace.css";
 
-const TABS = ['Chat', 'Tasks', 'Resources'];
+const TABS = ["Chat", "Tasks", "Resources"];
 
 export default function TeamWorkspace() {
   const { teamId } = useParams();
   const navigate = useNavigate();
   const [workspace, setWorkspace] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('Chat');
+  const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("Chat");
   const [completing, setCompleting] = useState(false);
+
+  useEffect(() => {
+    fetchWorkspace();
+
+    const interval = setInterval(() => {
+      fetchWorkspace();
+    }, 3000); // refresh every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [teamId]);
 
   // Decode current user from JWT stored in localStorage
   const getCurrentUserId = () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) return null;
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payload = JSON.parse(atob(token.split(".")[1]));
       return payload.id || payload._id || payload.userId;
     } catch {
       return null;
@@ -37,7 +48,7 @@ export default function TeamWorkspace() {
       const res = await getTeamWorkspace(teamId);
       setWorkspace(res.data);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to load workspace');
+      setError(err.response?.data?.message || "Failed to load workspace");
     } finally {
       setLoading(false);
     }
@@ -47,17 +58,40 @@ export default function TeamWorkspace() {
     fetchWorkspace();
   }, [fetchWorkspace]);
 
-  const handleComplete = async () => {
-    if (!window.confirm('Mark this project as completed? This cannot be undone.')) return;
-    setCompleting(true);
-    try {
-      await completeProject(teamId);
-      fetchWorkspace();
-    } catch (err) {
-      alert(err.response?.data?.message || 'Failed to complete project');
-    } finally {
-      setCompleting(false);
-    }
+  const handleComplete = () => {
+    toast(
+      ({ closeToast }) => (
+        <div style={{ textAlign: "center" }}>
+          <p>Mark this project as completed?</p>
+          <div
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              gap: "10px",
+              justifyContent: "center",
+            }}
+          >
+            <button
+              className="confirm-btn"
+              onClick={() => {
+                closeToast();
+                completeProject(); // your API call
+              }}
+            >
+              Yes, Complete
+            </button>
+
+            <button className="cancel-btn" onClick={closeToast}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        closeOnClick: false,
+      },
+    );
   };
 
   if (loading) {
@@ -90,11 +124,13 @@ export default function TeamWorkspace() {
   return (
     <div className="tw-page">
       {/* ── Hero Header ── */}
-      <div className={`tw-hero ${team.status === 'completed' ? 'tw-hero--done' : ''}`}>
+      <div
+        className={`tw-hero ${team.status === "completed" ? "tw-hero--done" : ""}`}
+      >
         <div className="tw-hero-inner">
           <div className="tw-hero-left">
             <div className="tw-status-badge">
-              {team.status === 'completed' ? '✅ Completed' : '🚀 Active'}
+              {team.status === "completed" ? "✅ Completed" : "🚀 Active"}
             </div>
             <h1 className="tw-team-name">{team.name}</h1>
             <p className="tw-project-idea">💡 {team.projectIdea}</p>
@@ -104,19 +140,21 @@ export default function TeamWorkspace() {
             {team.requiredSkills.length > 0 && (
               <div className="tw-skills">
                 {team.requiredSkills.map((s) => (
-                  <span key={s} className="tw-skill-tag">{s}</span>
+                  <span key={s} className="tw-skill-tag">
+                    {s}
+                  </span>
                 ))}
               </div>
             )}
           </div>
           <div className="tw-hero-right">
-            {isLeader && team.status === 'active' && (
+            {isLeader && team.status === "active" && (
               <button
                 className="tw-complete-btn"
                 onClick={handleComplete}
                 disabled={completing}
               >
-                {completing ? 'Updating…' : '🏁 Mark Completed'}
+                {completing ? "Updating…" : "🏁 Mark Completed"}
               </button>
             )}
           </div>
@@ -140,26 +178,26 @@ export default function TeamWorkspace() {
             {TABS.map((tab) => (
               <button
                 key={tab}
-                className={`tw-tab ${activeTab === tab ? 'tw-tab--active' : ''}`}
+                className={`tw-tab ${activeTab === tab ? "tw-tab--active" : ""}`}
                 onClick={() => setActiveTab(tab)}
               >
-                {tab === 'Chat' && '💬 '}
-                {tab === 'Tasks' && '📋 '}
-                {tab === 'Resources' && '🔗 '}
+                {tab === "Chat" && "💬 "}
+                {tab === "Tasks" && "📋 "}
+                {tab === "Resources" && "🔗 "}
                 {tab}
               </button>
             ))}
           </div>
 
           <div className="tw-tab-content">
-            {activeTab === 'Chat' && (
+            {activeTab === "Chat" && (
               <TeamChat
                 teamId={teamId}
                 currentUserId={currentUserId}
                 members={team.members}
               />
             )}
-            {activeTab === 'Tasks' && (
+            {activeTab === "Tasks" && (
               <TaskBoard
                 teamId={teamId}
                 tasks={tasks}
@@ -167,7 +205,7 @@ export default function TeamWorkspace() {
                 onUpdate={fetchWorkspace}
               />
             )}
-            {activeTab === 'Resources' && (
+            {activeTab === "Resources" && (
               <ResourceList
                 teamId={teamId}
                 resources={resources}

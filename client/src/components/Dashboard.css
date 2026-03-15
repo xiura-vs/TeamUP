@@ -42,14 +42,14 @@
 
 /* GitHub */
 .social-chip.github {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.25);
   color: white;
   text-decoration: none;
 }
 
 /* LinkedIn */
 .social-chip.linkedin {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.25);
   color: white;
   text-decoration: none;
 }
@@ -497,4 +497,94 @@
   font-size: 14px;
   color: #6b7280;
   text-align: center;
+}
+
+/* Teams Section */
+
+.teams-title {
+  margin-top: 30px;
+}
+
+/* Grid Layout */
+
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+/* Team Card */
+
+.team-card-modern {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.team-card-modern:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+}
+
+.team-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.team-idea {
+  font-size: 14px;
+  color: #666;
+  margin-top: 6px;
+}
+
+/* Workspace Button */
+
+.workspace-btn {
+  margin-top: 14px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.workspace-btn:hover {
+  opacity: 0.9;
+}
+
+/* No teams */
+
+.no-teams {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 10px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+}
+
+.no-teams p {
+  margin-bottom: 12px;
+  color: #666;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .teams-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

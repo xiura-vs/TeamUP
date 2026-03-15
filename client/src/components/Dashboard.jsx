@@ -20,6 +20,7 @@ export default function Dashboard() {
   const { userId } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [teams, setTeams] = useState([]);
 
   const [user, setUser] = useState(null);
   const [showFullBio, setShowFullBio] = useState(false);
@@ -30,6 +31,33 @@ export default function Dashboard() {
   const [inbox, setInbox] = useState([]);
   const [activeChatUser, setActiveChatUser] = useState(null);
   const [activeConversationId, setActiveConversationId] = useState(null);
+
+  useEffect(() => {
+    const pendingInvite = sessionStorage.getItem("pendingInviteToken");
+
+    if (pendingInvite) {
+      sessionStorage.removeItem("pendingInviteToken");
+      navigate(`/invite/${pendingInvite}`);
+    }
+  }, [navigate]);
+
+  const fetchTeams = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/teams/my", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setTeams(res.data.teams || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (!token) return;
+
+    fetchTeams();
+  }, [token]);
 
   const fetchConnectionsCount = async () => {
     const res = await fetch("http://localhost:5000/api/connections/count", {
@@ -92,31 +120,27 @@ export default function Dashboard() {
   }, [userId, token]);
 
   useEffect(() => {
-  if (!token) return;
+    if (!token) return;
 
-  const fetchInbox = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/api/chat/inbox",
-        {
+    const fetchInbox = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/chat/inbox", {
           headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setInbox(res.data.inbox || []);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+        });
+        setInbox(res.data.inbox || []);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-  // Initial load
-  fetchInbox();
+    // Initial load
+    fetchInbox();
 
-  // Poll every 4 seconds
-  const interval = setInterval(fetchInbox, 4000);
+    // Poll every 4 seconds
+    const interval = setInterval(fetchInbox, 4000);
 
-  return () => clearInterval(interval);
-
-}, [token]);
+    return () => clearInterval(interval);
+  }, [token]);
 
   if (!user) return <div className="loading">Loading...</div>;
 
@@ -161,33 +185,30 @@ export default function Dashboard() {
             <p className="no-skills">No skills added yet</p>
           )}
         </div>
-      
 
         <div className="dashboard-social-links">
+          {user.github && (
+            <a
+              href={user.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-chip github"
+            >
+              <span></span> GitHub
+            </a>
+          )}
 
-  {user.github && (
-    <a
-      href={user.github}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="social-chip github"
-    >
-      <span></span> GitHub
-    </a>
-  )}
-
-  {user.linkedin && (
-    <a
-      href={user.linkedin}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="social-chip linkedin"
-    >
-      <span></span> LinkedIn
-    </a>
-  )}
-
-</div>
+          {user.linkedin && (
+            <a
+              href={user.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-chip linkedin"
+            >
+              <span></span> LinkedIn
+            </a>
+          )}
+        </div>
 
         <div className="dashboad-welcome-actions">
           <button
@@ -201,6 +222,12 @@ export default function Dashboard() {
             onClick={() => navigate(`/edit-profile/${user._id}`)}
           >
             Edit Profile
+          </button>
+          <button
+            className="dashboad-btn-outline"
+            onClick={() => navigate(`/create-team`)}
+          >
+            Create Team
           </button>
         </div>
       </div>
@@ -249,6 +276,47 @@ export default function Dashboard() {
           </div>
         </div>
       ))}
+
+      <h2 className="section-title teams-title">Your Teams</h2>
+
+      {teams.length === 0 ? (
+        <div className="no-teams">
+          <p>You are not part of any team yet</p>
+          <button
+            className="dashboad-btn-primary"
+            onClick={() => navigate(`/create-team`)}
+          >
+            Create Your First Team
+          </button>
+        </div>
+      ) : (
+        <div className="teams-grid">
+          {teams.map((team) => (
+            <div key={team._id} className="team-card-modern">
+              <div className="team-card-header">
+                <h3>{team.name}</h3>
+              </div>
+
+              <p className="team-idea">{team.projectIdea}</p>
+
+              <button
+                className="dashboad-btn-primary"
+                disabled={team.status === "completed"}
+                onClick={() => {
+                  if (team.status === "completed") {
+                    toast.info("This project has been completed 🎉");
+                    return;
+                  }
+
+                  navigate(`/team/${team._id}`);
+                }}
+              >
+                {team.status === "completed" ? "Completed" : "Open Workspace"}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="dashboard-messages-layout">
         <div className="dashboard-messages-list">

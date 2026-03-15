@@ -37,7 +37,7 @@
 
 .tw-back-btn {
   padding: 10px 24px;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -53,7 +53,7 @@
 }
 
 .tw-hero {
-  background: linear-gradient(135deg, #6c3de0 0%, #a855f7 60%, #ec4899 100%);
+  background: linear-gradient(135deg, #6c3de0 0%, #6e66f8 60%);
   padding: 40px 24px 36px;
   color: #fff;
 }
@@ -181,7 +181,7 @@
 }
 
 .tw-tab--active {
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  background: linear-gradient(135deg, #6c3de0 0%, #5d55f7 60%);
   color: #fff;
 }
 
@@ -192,4 +192,21 @@
 
 .tw-tab-content {
   /* children manage their own height */
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg,#6c3de0,#a855f7);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #eee;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }

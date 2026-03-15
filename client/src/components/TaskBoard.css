@@ -11,7 +11,7 @@
 
 .tb-add-btn {
   padding: 8px 18px;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  background: linear-gradient(135deg, #3d42e0, #7769f3);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -63,7 +63,7 @@
 
 .tb-submit-btn {
   padding: 10px 20px;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  background: linear-gradient(135deg, #6c3de0, #556df7);
   color: #fff;
   border: none;
   border-radius: 10px;

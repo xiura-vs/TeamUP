@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
 
 export default function Login() {
@@ -13,6 +13,7 @@ export default function Login() {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInputChange = (e) => {
     setFormData({
@@ -36,7 +37,19 @@ export default function Login() {
       toast.success("Welcome back 🎉");
 
       setTimeout(() => {
-        navigate("/");
+        const params = new URLSearchParams(location.search);
+        const redirect = params.get("redirect");
+
+        const pending = sessionStorage.getItem("pendingInviteToken");
+
+        if (pending) {
+          sessionStorage.removeItem("pendingInviteToken");
+          navigate(`/invite/${pending}`);
+        } else if (redirect) {
+          navigate(redirect);
+        } else {
+          navigate(`/dashboard/${res.data.user.id}`);
+        }
       }, 1200);
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed ❌");

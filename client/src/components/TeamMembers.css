@@ -33,7 +33,7 @@
 
 .tm-invite-btn {
   padding: 6px 14px;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -65,7 +65,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6c3de0, #a855f7);
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: #fff;
   font-size: 14px;
   font-weight: 700;
