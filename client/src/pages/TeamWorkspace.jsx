@@ -59,40 +59,49 @@ export default function TeamWorkspace() {
   }, [fetchWorkspace]);
 
   const handleComplete = () => {
-    toast(
-      ({ closeToast }) => (
-        <div style={{ textAlign: "center" }}>
-          <p>Mark this project as completed?</p>
-          <div
-            style={{
-              marginTop: "10px",
-              display: "flex",
-              gap: "10px",
-              justifyContent: "center",
+  toast(
+    ({ closeToast }) => (
+      <div style={{ textAlign: "center" }}>
+        <p>Mark this project as completed?</p>
+        <div
+          style={{
+            marginTop: "10px",
+            display: "flex",
+            gap: "10px",
+            justifyContent: "center",
+          }}
+        >
+          <button
+            className="confirm-btn"
+            onClick={async () => {
+              closeToast();
+              try {
+                setCompleting(true);
+                await completeProject(teamId);
+                toast.success("Project marked as completed!");
+                fetchWorkspace();
+              } catch (err) {
+                toast.error("Failed to complete project");
+              } finally {
+                setCompleting(false);
+              }
             }}
           >
-            <button
-              className="confirm-btn"
-              onClick={() => {
-                closeToast();
-                completeProject(); // your API call
-              }}
-            >
-              Yes, Complete
-            </button>
+            Yes, Complete
+          </button>
 
-            <button className="cancel-btn" onClick={closeToast}>
-              Cancel
-            </button>
-          </div>
+          <button className="cancel-btn" onClick={closeToast}>
+            Cancel
+          </button>
         </div>
-      ),
-      {
-        autoClose: false,
-        closeOnClick: false,
-      },
-    );
-  };
+      </div>
+    ),
+    {
+      autoClose: false,
+      closeOnClick: false,
+    },
+  );
+};
 
   if (loading) {
     return (
