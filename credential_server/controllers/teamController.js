@@ -219,21 +219,35 @@ exports.updateTaskStatus = async (req, res) => {
   try {
     const { taskId } = req.params;
     const { status } = req.body;
+    const userId = req.user.id;
 
-    const task = await Task.findByIdAndUpdate(
-      taskId,
-      { status },
-      { new: true }
-    ).populate('assignedTo', 'fullName').populate('createdBy', 'fullName');
+    const task = await Task.findById(taskId);
 
-    if (!task) return res.status(404).json({ message: 'Task not found' });
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
 
-    res.json({ success: true, task });
+    // ONLY assigned user can update
+    if (!task.assignedTo || task.assignedTo.toString() !== userId) {
+      return res.status(403).json({
+        message: "Only the assigned user can change the task status",
+      });
+    }
+
+    task.status = status;
+    await task.save();
+
+    const populated = await task.populate([
+      { path: "assignedTo", select: "fullName" },
+      { path: "createdBy", select: "fullName" },
+    ]);
+
+    res.json({ success: true, task: populated });
+
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-
 // ─── addResource ──────────────────────────────────────────────────────────────
 exports.addResource = async (req, res) => {
   try {
