@@ -18,7 +18,7 @@ export default function DashboardChat({ user, conversationId }) {
     const fetchMessages = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/chat/messages/${conversationId}`,
+          `https://teamup-jdzz.onrender.com/api/chat/messages/${conversationId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -47,7 +47,7 @@ export default function DashboardChat({ user, conversationId }) {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/chat/send",
+        "https://teamup-jdzz.onrender.com/api/chat/send",
         {
           receiverId: user._id || user.id,
           text,

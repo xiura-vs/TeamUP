@@ -22,7 +22,7 @@ export default function EditProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/profile", {
+        const res = await axios.get("https://teamup-jdzz.onrender.com/api/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -50,7 +50,7 @@ export default function EditProfile() {
     e.preventDefault();
     try {
       const res = await axios.put(
-        "http://localhost:5000/api/auth/profile",
+        "https://teamup-jdzz.onrender.com/api/auth/profile",
         {
           ...form,
           skills: form.skills.split(",").map((s) => s.trim()),

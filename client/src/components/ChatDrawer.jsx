@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { io } from "socket.io-client";
 import "./ChatDrawer.css";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://teamup-jdzz.onrender.com");
 
 export default function ChatDrawer({ user, conversationId, onClose }) {
   const [messages, setMessages] = useState([]);
@@ -41,7 +41,7 @@ export default function ChatDrawer({ user, conversationId, onClose }) {
         }
 
         const res = await fetch(
-          `http://localhost:5000/api/chat/conversation/${otherUserId}`,
+          `https://teamup-jdzz.onrender.com/api/chat/conversation/${otherUserId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ export default function ChatDrawer({ user, conversationId, onClose }) {
   useEffect(() => {
     if (!resolvedConversationId) return;
 
-    fetch(`http://localhost:5000/api/chat/messages/${resolvedConversationId}`, {
+    fetch(`https://teamup-jdzz.onrender.com/api/chat/messages/${resolvedConversationId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -98,7 +98,7 @@ export default function ChatDrawer({ user, conversationId, onClose }) {
   useEffect(() => {
     if (!resolvedConversationId) return;
 
-    fetch(`http://localhost:5000/api/chat/read/${resolvedConversationId}`, {
+    fetch(`https://teamup-jdzz.onrender.com/api/chat/read/${resolvedConversationId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -114,7 +114,7 @@ export default function ChatDrawer({ user, conversationId, onClose }) {
     if (!text.trim() || !resolvedConversationId) return;
 
     try {
-      const res = await fetch("http://localhost:5000/api/chat/send", {
+      const res = await fetch("https://teamup-jdzz.onrender.com/api/chat/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -67,7 +67,7 @@ export default function FindTeammates() {
       setMatches([]);
       setHasSearched(true);
 
-      const res = await fetch("http://localhost:5000/api/match", {
+      const res = await fetch("https://teamup-jdzz.onrender.com/api/match", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -232,7 +232,7 @@ export default function FindTeammates() {
                       onClick={async () => {
                         try {
                           const res = await fetch(
-                            "http://localhost:5000/api/connections/send",
+                            "https://teamup-jdzz.onrender.com/api/connections/send",
                             {
                               method: "POST",
                               headers: {

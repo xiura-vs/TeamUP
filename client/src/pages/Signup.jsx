@@ -72,7 +72,7 @@ export default function Signup() {
 
       const finalSkills = [...new Set([...skills, ...typedSkills])];
 
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
+      const res = await fetch("https://teamup-jdzz.onrender.com/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

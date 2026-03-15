@@ -16,7 +16,7 @@ export default function AllProfiles() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/auth/all-users", {
+        const res = await fetch("https://teamup-jdzz.onrender.com/api/auth/all-users", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -77,7 +77,7 @@ export default function AllProfiles() {
 
                   try {
                     const res = await fetch(
-                      "http://localhost:5000/api/connections/send",
+                      "https://teamup-jdzz.onrender.com/api/connections/send",
                       {
                         method: "POST",
                         headers: {

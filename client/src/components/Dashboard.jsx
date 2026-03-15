@@ -43,7 +43,7 @@ export default function Dashboard() {
 
   const fetchTeams = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/teams/my", {
+      const res = await axios.get("https://teamup-jdzz.onrender.com/api/teams/my", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -60,7 +60,7 @@ export default function Dashboard() {
   }, [token]);
 
   const fetchConnectionsCount = async () => {
-    const res = await fetch("http://localhost:5000/api/connections/count", {
+    const res = await fetch("https://teamup-jdzz.onrender.com/api/connections/count", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -68,7 +68,7 @@ export default function Dashboard() {
   };
 
   const fetchRequests = async () => {
-    const res = await fetch("http://localhost:5000/api/connections/requests", {
+    const res = await fetch("https://teamup-jdzz.onrender.com/api/connections/requests", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -76,7 +76,7 @@ export default function Dashboard() {
   };
 
   const respondToRequest = async (requestId, action) => {
-    await fetch("http://localhost:5000/api/connections/respond", {
+    await fetch("https://teamup-jdzz.onrender.com/api/connections/respond", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export default function Dashboard() {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/auth/${userId}`,
+          `https://teamup-jdzz.onrender.com/api/auth/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
         setUser(res.data);
@@ -124,7 +124,7 @@ export default function Dashboard() {
 
     const fetchInbox = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/chat/inbox", {
+        const res = await axios.get("https://teamup-jdzz.onrender.com/api/chat/inbox", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setInbox(res.data.inbox || []);
