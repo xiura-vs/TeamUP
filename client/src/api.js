@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://teamup-jdzz.onrender.com',
+  baseURL: 'https://teamup-jdzz.onrender.com/api',
 });
 
 // Auto-attach JWT token
