@@ -6,6 +6,8 @@ const Task = require("../models/Task");
 const Resource = require("../models/Resource");
 const TeamMessage = require("../models/TeamMessage");
 const User = require("../models/User");
+const { Resend } = require("resend");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ─── Nodemailer transporter ───────────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
@@ -82,29 +84,25 @@ exports.inviteMember = async (req, res) => {
 
     const inviteLink = `${process.env.CLIENT_URL}/invite/${token}`;
 
-    res.json({ success: true, message: "Invite sent successfully" });
+    await resend.emails.send({
+      from: "TeamUP <onboarding@resend.dev>",
+      to: email,
+      subject: `You're invited to join "${team.name}" on TeamUP`,
+      html: `
+    <div style="font-family: sans-serif; max-width: 520px; margin: auto; padding: 32px; border-radius: 12px; border: 1px solid #e0e0e0;">
+      <h2 style="color: #6c3de0;">You've been invited! 🚀</h2>
+      <p>You have been invited to join <strong>${team.name}</strong> on <strong>TeamUP</strong>.</p>
+      <p><strong>Project Idea:</strong> ${team.projectIdea}</p>
+      <p>Click the button below to accept the invitation:</p>
+      <a href="${inviteLink}" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#6c3de0,#a855f7);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;margin-top:8px;">
+        Accept Invite
+      </a>
+      <p style="margin-top:24px;color:#888;font-size:13px;">This link expires in 7 days.</p>
+    </div>
+  `,
+    });
 
-    transporter
-      .sendMail({
-        from: `"TeamUP" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: `You're invited to join "${team.name}" on TeamUP`,
-        html: `
-      <div style="font-family: sans-serif; max-width: 520px; margin: auto; padding: 32px; border-radius: 12px; border: 1px solid #e0e0e0;">
-        <h2 style="color: #6c3de0;">You've been invited! 🚀</h2>
-        <p>You have been invited to join <strong>${team.name}</strong> on <strong>TeamUP</strong>.</p>
-        <p><strong>Project Idea:</strong> ${team.projectIdea}</p>
-        <p>Click the button below to accept the invitation:</p>
-        <a href="${inviteLink}" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#6c3de0,#a855f7);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;margin-top:8px;">
-          Accept Invite
-        </a>
-        <p style="margin-top:24px;color:#888;font-size:13px;">This link expires in 7 days.</p>
-      </div>
-    `,
-      })
-      .catch((err) => {
-        console.error("Email send error:", err);
-      });
+    res.json({ success: true, message: "Invite sent successfully" });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -371,12 +369,9 @@ exports.removeMember = async (req, res) => {
         .status(403)
         .json({ message: "Only the leader can remove members" });
     if (targetId === leaderId)
-      return res
-        .status(400)
-        .json({
-          message:
-            "Leader cannot remove themselves. Transfer leadership first.",
-        });
+      return res.status(400).json({
+        message: "Leader cannot remove themselves. Transfer leadership first.",
+      });
 
     team.members = team.members.filter((m) => m.toString() !== targetId);
     await team.save();
@@ -397,12 +392,9 @@ exports.leaveTeam = async (req, res) => {
     if (!team) return res.status(404).json({ message: "Team not found" });
 
     if (team.leader.toString() === userId)
-      return res
-        .status(400)
-        .json({
-          message:
-            "Leader cannot leave. Transfer leadership or delete the team.",
-        });
+      return res.status(400).json({
+        message: "Leader cannot leave. Transfer leadership or delete the team.",
+      });
 
     team.members = team.members.filter((m) => m.toString() !== userId);
     await team.save();
