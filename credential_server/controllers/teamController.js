@@ -409,20 +409,28 @@ exports.leaveTeam = async (req, res) => {
 exports.completeProject = async (req, res) => {
   try {
     const { teamId } = req.params;
-    const leaderId = req.user.id;
+
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const leaderId = req.user._id || req.user.id;
 
     const team = await Team.findById(teamId);
     if (!team) return res.status(404).json({ message: "Team not found" });
-    if (team.leader.toString() !== leaderId)
+
+    if (team.leader.toString() !== leaderId.toString()) {
       return res
         .status(403)
         .json({ message: "Only the leader can mark the project complete" });
+    }
 
     team.status = "completed";
     await team.save();
 
     res.json({ success: true, message: "Project marked as completed!" });
   } catch (err) {
+    console.error("Complete project error:", err);
     res.status(500).json({ success: false, message: err.message });
   }
 };
