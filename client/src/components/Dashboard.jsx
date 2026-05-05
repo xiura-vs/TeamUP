@@ -21,6 +21,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [teams, setTeams] = useState([]);
+  const [avatar, setAvatar] = useState(null);
 
   const [user, setUser] = useState(null);
   const [showFullBio, setShowFullBio] = useState(false);
@@ -43,9 +44,12 @@ export default function Dashboard() {
 
   const fetchTeams = async () => {
     try {
-      const res = await axios.get("https://teamup-jdzz.onrender.com/api/teams/my", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://teamup-jdzz.onrender.com/api/teams/my",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
 
       setTeams(res.data.teams || []);
     } catch (err) {
@@ -60,17 +64,23 @@ export default function Dashboard() {
   }, [token]);
 
   const fetchConnectionsCount = async () => {
-    const res = await fetch("https://teamup-jdzz.onrender.com/api/connections/count", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      "https://teamup-jdzz.onrender.com/api/connections/count",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
     const data = await res.json();
     setConnectionsCount(data.count);
   };
 
   const fetchRequests = async () => {
-    const res = await fetch("https://teamup-jdzz.onrender.com/api/connections/requests", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      "https://teamup-jdzz.onrender.com/api/connections/requests",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
     const data = await res.json();
     setRequests(data.requests || []);
   };
@@ -124,9 +134,12 @@ export default function Dashboard() {
 
     const fetchInbox = async () => {
       try {
-        const res = await axios.get("https://teamup-jdzz.onrender.com/api/chat/inbox", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "https://teamup-jdzz.onrender.com/api/chat/inbox",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         setInbox(res.data.inbox || []);
       } catch (err) {
         console.error(err);
@@ -149,7 +162,7 @@ export default function Dashboard() {
       <div className="welcome-card">
         <div className="dashboad-avatar-wrapper">
           <img
-            src={avatarMap[user.gender] || avatarMap.others}
+            src={avatar || avatarMap[user.gender] || avatarMap.others}
             alt="avatar"
             className="dashboad-avatar"
           />
@@ -333,10 +346,12 @@ export default function Dashboard() {
                 setActiveConversationId(chat.conversationId);
               }}
             >
-              <div className="message-avatar">{chat.user.fullName[0]}</div>
+              <div className="message-avatar">
+                {chat.user?.fullName?.[0] || "?"}
+              </div>
 
               <div className="message-info">
-                <h4>{chat.user.fullName}</h4>
+                <h4>{chat.user?.fullName || "Deleted User"}</h4>
                 <p>{chat.lastMessage || "Start the conversation"}</p>
               </div>
             </div>
